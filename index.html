@@ -18,6 +18,14 @@
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
     const canvasCtx = canvasElement.getContext('2d');
   
+    let constraints = { 
+      audio: true, 
+      video: { 
+          width: { ideal: 1920 }, 
+          height: { ideal: 1080 } 
+      }
+    };
+  
     let stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     let stream_settings = stream.getVideoTracks()[0].getSettings();
