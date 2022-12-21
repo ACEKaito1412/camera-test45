@@ -17,12 +17,24 @@
     const videoElement = document.getElementsByClassName('input_video')[0];
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
     const canvasCtx = canvasElement.getContext('2d');
+  
+    let stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+    let stream_settings = stream.getVideoTracks()[0].getSettings();
+
+    // actual width & height of the camera video
+    let stream_width = stream_settings.width;
+    let stream_height = stream_settings.height;
+
+    canvasElement.width = stream_width;
+    canvasElement.height = stream_height;
     
     function onResults(results) {
       canvasCtx.save();
       canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
       canvasCtx.drawImage(results.segmentationMask, 0, 0,
                           canvasElement.width, canvasElement.height);
+   
     
       // Only overwrite existing pixels.
       canvasCtx.globalCompositeOperation = 'source-in';
