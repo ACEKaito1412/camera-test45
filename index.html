@@ -11,20 +11,19 @@
 <body>
   <div class="container">
     <video class="input_video"></video>
-    <canvas class="output_canvas" width="780px" height="1280px"></canvas>
+    <canvas class="output_canvas" width="780" height="1280"></canvas>
   </div>
 <script type="module">
     const videoElement = document.getElementsByClassName('input_video')[0];
     const canvasElement = document.getElementsByClassName('output_canvas')[0];
     const canvasCtx = canvasElement.getContext('2d');
-  
-  
+
+
     function onResults(results) {
       canvasCtx.save();
       canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
       canvasCtx.drawImage(results.segmentationMask, 0, 0,
                           canvasElement.width, canvasElement.height);
-   
     
       // Only overwrite existing pixels.
       canvasCtx.globalCompositeOperation = 'source-in';
@@ -67,6 +66,7 @@
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5
     });
+
     holistic.onResults(onResults);
     
     const camera = new Camera(videoElement, {
